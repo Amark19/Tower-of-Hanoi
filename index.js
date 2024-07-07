@@ -26,20 +26,10 @@ class Rod {
         this.disks = [];
     }
     push(disk) {
-        const diskElement = document.createElement('div');
-        diskElement.className = 'disk';
-        diskElement.id = `disk-${disk.size}`;
-        diskElement.style.width = `${disk.size * 20}px`;
+        const diskElement = document.getElementById(`disk-${disk.size}`) || disk.createElement();
         diskElement.style.bottom = `${this.disks.length * 20}px`;
-        diskElement.style.backgroundColor = colors[disk.size - 1];
-        diskElement.style.position = 'absolute';
-        diskElement.style.left = '50%';
-        diskElement.style.transform = 'translateX(-50%)';
         this.element.appendChild(diskElement);
         this.disks.push(disk);
-    }
-    checkDiskPresent() {
-        return this.disks.length > 0;
     }
     pop() {
         this.element.removeChild(this.element.lastChild);
@@ -50,6 +40,17 @@ class Rod {
 class Disk {
     constructor(size) {
         this.size = size;
+    }
+    createElement() {
+        const diskElement = document.createElement('div');
+        diskElement.className = 'disk';
+        diskElement.id = `disk-${this.size}`;
+        diskElement.style.width = `${this.size * 20}px`;
+        diskElement.style.backgroundColor = colors[this.size - 1];
+        diskElement.style.position = 'absolute';
+        diskElement.style.left = '50%';
+        diskElement.style.transform = 'translateX(-50%)';
+        return diskElement;
     }
 }
 
